@@ -1,0 +1,77 @@
+//int numColumns = 4; 
+int h = 0;
+
+PImage img;
+ 
+int avgR = 0;
+int avgG = 0;
+int avgB = 0;
+
+int randomR = 255;
+int randomG = 255;
+int randomB = 255;
+
+void setup(){
+ size(1280, 720);
+ frameRate(20);
+ 
+ colorMode(RGB, 255, 255, 255);
+ 
+   img = loadImage("buggy.jpg"); 
+   img.loadPixels();             
+   
+    for(int x = 0; x < img.width; x++){      
+    for(int y = 0; y < img.height; y++){
+
+    int loc = x + y * img.width;
+
+    float r = red(img.pixels[loc]);
+    float g = green(img.pixels[loc]);
+    float b = blue(img.pixels[loc]);
+    
+    avgR += r;
+    avgG += g;
+    avgB += b;
+    
+    randomR += red(255);
+    randomG += green(255);
+    randomB += blue(255);
+    
+        }
+    }
+ 
+  noStroke();
+  noLoop();
+  
+}
+
+void draw(){
+ //for (int i=0; i<numColumns; i++){
+   
+  randomR = randomR / (img.width * img.height);
+  randomG = randomG / (img.width * img.height);
+  randomB = randomB / (img.width * img.height);
+   
+  avgR = avgR / (img.width * img.height);
+  avgG = avgG / (img.width * img.height);
+  avgB = avgB / (img.width * img.height);
+  
+  fill(avgR, avgG, avgB);
+  rect(0, 0, 320, height); 
+   
+  fill(randomR);
+  rect(320, 0, 320, height); 
+  
+  fill(avgG);
+  rect(640, 0, 320, height);
+  
+  fill(avgB);
+  rect(960, 0, 320, height);
+  
+ }
+
+
+void keyPressed(){
+  h = int(random(255));
+  redraw();
+}
